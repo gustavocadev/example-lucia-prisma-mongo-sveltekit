@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  // the provider is MongoDB
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  // this is for lucia auth
+  id String @id @map("_id")
+
+  // we add this fields to the User model - we can add more fields, roles, etc.
+  name     String
+  // this is require for auth
+  username String @unique
+
+  // this is require for lucia auth
+  session Session[]
+  Key     Key[]
+
+  // we rename the collection name to users if we dont do this it will be "user" in the database
+  @@map("users")
+}
+
+model Session {
+  id             String @id @map("_id")
+  user_id        String
+  active_expires BigInt
+  idle_expires   BigInt
+  user           User   @relation(references: [id], fields: [user_id], onDelete: Cascade)
+
+  @@index([user_id])
+  @@map("sessions")
+}
+
+model Key {
+  id              String  @id @map("_id")
+  hashed_password String?
+  user_id         String
+  primary         Boolean
+  user            User    @relation(references: [id], fields: [user_id], onDelete: Cascade)
+
+  @@index([user_id])
+  @@map("keys")
+}
