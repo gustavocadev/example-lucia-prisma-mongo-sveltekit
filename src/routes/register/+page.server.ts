@@ -34,7 +34,7 @@ export const actions = {
 			});
 			console.log('user creted', user);
 
-			// EXAMPLE 2 (keys-collection): this is how is created a user in the database
+			// EXAMPLE 1 (keys-collection): this is how is created a user in the database
 			/*
         {
           "_id": "username:shira",
@@ -44,7 +44,7 @@ export const actions = {
         }
       */
 
-			// EXAMPLE 1 (users-collection): this is how is created a user in the database
+			// EXAMPLE 2 (users-collection): this is how is created a user in the database
 			/*
       {
         "_id": "eZ9gSoAiQBhf0XO",
