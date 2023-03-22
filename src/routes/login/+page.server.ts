@@ -27,35 +27,43 @@ export const actions = {
 		});
 
 		try {
-			const key = await auth.validateKeyPassword('username', username, password);
-
+			const key = await auth.useKey('username', username, password);
 			// console.log(key) return something like this:
 			/*
       {
+        type: 'persistent',
+        isPrimary: true,
         providerId: 'username',
         providerUserId: 'sara',
-        isPrimary: true,
-        isPasswordDefined: true,
-        userId: 'Ml3RuTY1Rfp2Nh7'
+        userId: 'nV68SDRrRwZ9zlv',
+        isPasswordDefined: true
       }
     */
 
 			// to create a session we need the pass the userId which is the id of the user in the database
 			const session = await auth.createSession(key.userId);
-			// EXAMPLE(sessions-collection): this is how is created a user in the database
+			console.log(session);
+			// console.log(session) return something like this:
 			/*
      {
-        "_id": "Mi8wZCwuW9BlMYk1Bn7hDfstZK7YSMYOlUx9nAel",
-        "user_id": "eZ9gSoAiQBhf0XO",
-        "active_expires": {
-          "$numberLong": "1676493381029"
-        },
-        "idle_expires": {
-          "$numberLong": "1677702981029"
-        },
+        userId: 'nV68SDRrRwZ9zlv',
+        activePeriodExpires: 2023-03-23T23:21:03.972Z,
+        sessionId: 'tbNXULwQHpUwMonlSYGJKAShSad8bdONNPf5k5eT',
+        idlePeriodExpires: 2023-04-06T23:21:03.972Z,
+        state: 'active',
+        isFresh: true
       }
       */
 
+			// EXAMPLE(sessions-collection): this is how is created a user in the database
+			/*
+        {
+          _id: "ltwLb2JBWNBd0utmMsEElmnxVzsbiiGxD0uVvmiA",
+          user_id: "nV68SDRrRwZ9zlv",
+          active_expires: 1679604913588,
+          idle_expires:1680814513588
+        }
+      */
 			// now let's set the session so we can get the session everywhere in server like this page
 			locals.setSession(session);
 		} catch (error) {

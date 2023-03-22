@@ -19,8 +19,11 @@ export const actions = {
 		};
 
 		try {
+			// this does two things:
+			// 1. create a user in the database
+			// 2. create a key in the database
 			const user = await auth.createUser({
-				key: {
+				primaryKey: {
 					providerId: 'username',
 					providerUserId: username,
 					// lucia gonna hash the password automatically for you and saved it in the collection of keys in the database
@@ -41,6 +44,7 @@ export const actions = {
           "hashed_password": "s2:P3bJwy4uDoFa7VfO:557e4cd7be034ff8aa10327000e3e33a2a244e2192ab826219fd67bb0086e6fcbb7f59da50b49e2c363a0b70a8350ca5166bd9168bd8cb69693cd4550c85dacb",
           "user_id": "eZ9gSoAiQBhf0XO",
           "primary": true
+          "expires": null
         }
       */
 
@@ -48,7 +52,7 @@ export const actions = {
 			/*
       {
         "_id": "eZ9gSoAiQBhf0XO",
-        "name": "Gus foo",
+        "name": "Shira foo",
         "role": "user",
         "username": "foo"
       }
