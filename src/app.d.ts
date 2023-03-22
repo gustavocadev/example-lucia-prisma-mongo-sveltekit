@@ -17,10 +17,8 @@ declare global {
 
 	declare namespace Lucia {
 		type Auth = import('$lib/server/lucia').Auth;
-		type UserAttributes = {
-			username: string;
-			name: string;
-		};
+		// we omit the id property because lucia automatically generate it for us when we create a user
+		type UserAttributes = Omit<import('@prisma/client').User, 'id'>;
 	}
 }
 
