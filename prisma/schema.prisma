@@ -21,11 +21,8 @@ model User {
   username String @unique
 
   // this is require for lucia auth
-  session Session[]
-  Key     Key[]
-
-  // we rename the collection name to users if we dont do this it will be "user" in the database
-  @@map("users")
+  auth_session Session[]
+  key          Key[]
 }
 
 model Session {
@@ -36,17 +33,13 @@ model Session {
   user           User   @relation(references: [id], fields: [user_id], onDelete: Cascade)
 
   @@index([user_id])
-  @@map("sessions")
 }
 
 model Key {
   id              String  @id @map("_id")
   hashed_password String?
   user_id         String
-  primary         Boolean
-  expires         BigInt?
   user            User    @relation(references: [id], fields: [user_id], onDelete: Cascade)
 
   @@index([user_id])
-  @@map("keys")
 }
