@@ -36,5 +36,9 @@
 		/>
 	</div>
 
-	<button class="btn mt-4 max-w-xs" type="submit"> Iniciar Sesion </button>
+	<button class="btn mt-4 max-w-xs btn-primary" type="submit"> Iniciar Sesion </button>
+
+  <p class='pt-2'>
+    Don't have an account? <a href="/register" class="link link-hover font-bold">Register here.</a>
+  </p>
 </form>
