@@ -36,7 +36,6 @@
 	"type": "module",
 	"dependencies": {
 		"@lucia-auth/adapter-prisma": "^3.0.1",
-		"@lucia-auth/sveltekit": "^0.6.11",
 		"@prisma/client": "^5.1.1",
 		"daisyui": "^3.5.1",
 		"lucia": "^2.3.0"
