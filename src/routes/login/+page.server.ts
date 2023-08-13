@@ -2,10 +2,11 @@ import type { Actions } from '@sveltejs/kit';
 import { auth } from '$lib/server/lucia';
 import { fail, redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import { prisma } from '$lib/server/prisma';
 
 export const load = (async ({ locals }) => {
 	// let's get the session from the locals
-	const session = await locals.validate();
+	const session = await locals.auth.validate();
 
 	if (!session) {
 		return {};
@@ -41,7 +42,10 @@ export const actions = {
     */
 
 			// to create a session we need the pass the userId which is the id of the user in the database
-			const session = await auth.createSession(key.userId);
+			const session = await auth.createSession({
+				userId: key.userId,
+				attributes: {}
+			});
 			console.log(session);
 			// console.log(session) return something like this:
 			/*
@@ -65,7 +69,7 @@ export const actions = {
         }
       */
 			// now let's set the session so we can get the session everywhere in server like this page
-			locals.setSession(session);
+			locals.auth.setSession(session);
 		} catch (error) {
 			console.error(error);
 			return fail(400);

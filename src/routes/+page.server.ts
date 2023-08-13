@@ -3,7 +3,7 @@ import type { PageServerLoad } from './$types';
 import { auth } from '$lib/server/lucia';
 
 export const load = (async ({ locals }) => {
-	const session = await locals.validate();
+	const session = await locals.auth.validate();
 
 	if (!session) throw redirect(303, '/login');
 
@@ -12,7 +12,7 @@ export const load = (async ({ locals }) => {
 
 export const actions = {
 	logout: async ({ locals }) => {
-		const session = await locals.validate();
+		const session = await locals.auth.validate();
 
 		if (!session) return fail(401);
 
@@ -20,7 +20,7 @@ export const actions = {
 		await auth.invalidateSession(session.sessionId);
 
 		// now let's set the session to null
-		locals.setSession(null);
+		locals.auth.setSession(null);
 
 		// next we redirect to the login page
 		throw redirect(303, '/login');

@@ -3,7 +3,7 @@ import { auth } from '$lib/server/lucia';
 import type { PageServerLoad } from './$types';
 
 export const load = (async ({ locals }) => {
-	const session = await locals.validate();
+	const session = await locals.auth.validate();
 
 	if (!session) return {};
 
@@ -23,7 +23,7 @@ export const actions = {
 			// 1. create a user in the database
 			// 2. create a key in the database
 			const user = await auth.createUser({
-				primaryKey: {
+				key: {
 					providerId: 'username',
 					providerUserId: username,
 					// lucia gonna hash the password automatically for you and saved it in the collection of keys in the database
