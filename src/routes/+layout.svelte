@@ -1,9 +1,13 @@
 <script>
 	import '../app.css';
 	import Navbar from '../lib/components/Navbar.svelte';
+
+	export let data;
 </script>
 
-<Navbar />
+{#if data?.user}
+	<Navbar />
+{/if}
 <main class="px-12">
 	<slot />
 </main>
