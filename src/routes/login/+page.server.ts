@@ -12,7 +12,7 @@ export const load = (async ({ locals }) => {
 		return {};
 	}
 
-	throw redirect(303, '/');
+	redirect(303, '/');
 }) satisfies PageServerLoad;
 
 export const actions = {
@@ -75,6 +75,6 @@ export const actions = {
 			return fail(400);
 		}
 
-		throw redirect(303, '/');
+		redirect(303, '/');
 	}
 } satisfies Actions;
